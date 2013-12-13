@@ -1,38 +1,43 @@
 <html>
   <head>
-    <title>Canvas tutorial</title>
+    <title>jLander</title>
   
   <script type="application/javascript">
-  var gameLoopCounter = 0;
-  var cycleTime = 100;
-  var changeX = 0; // starting vertical velocity
-  var changeY = 5; // starting horizontal velocity
-  var posX  = 0; // starting horizontal position 
-  var posY = 0; // starting vertical position
-  var accelX = 1 // vertical forces at work!  
-  var accelY = 0 // horizontal forces at work! 
+    var gameLoopCounter = 0;
+    var cycleTime = 1000;
+    var changeX = 0; // starting vertical velocity
+    var changeY = 5; // starting horizontal velocity
+    var posX  = 0; // starting horizontal position 
+    var posY = 0; // starting vertical position
+    var accelX = 1; // vertical forces at work!  
+    var accelY = 0; // horizontal forces at work! 
+    var canvasEdgeX = 500; 
+    var canvasEdgeY = 500;
+    var landerSize = 5; 
 
-    function loop() {
+    function loop(){
 
       setInterval(function(){
         console.log("loop starts");
-        gameLoopCounter += 1 
-
-        changeX += accelX
-        changeY += accelY 
-
-        posX += changeX
-        posY += changeY
-
-        console.log("positions updated to " + posX + " " + posY)
-
+        gameLoopCounter += 1; 
+        changeX += accelX;
+        changeY += accelY; 
+        posX += changeX;
+        posY += changeY;
+        console.log("positions updated to " + posX + " " + posY);
+        // collisionCheck();
         draw();
       },cycleTime);
+    };
 
-    }
+    // function collisionCheck(){
+    //   console.log("collisionCheck starts")
+    //   if posY >= (500 - 5) {
+    //     console.log("hit the edge!")
+    //   }
+    // };
 
-
-    function draw() {
+    function draw(){
       console.log("draw starts")
 
       // need to clear the canvas between draws! 
@@ -43,7 +48,7 @@
 
         var ctx = canvas.getContext("2d");
         ctx.fillStyle = "rgba(0, 255, 0, .5)";
-        ctx.fillRect (posY, posX, 5, 5);
+        ctx.fillRect (posY, posX, landerSize, landerSize);
 
       }
     }
