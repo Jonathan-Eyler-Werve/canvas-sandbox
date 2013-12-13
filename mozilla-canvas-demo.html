@@ -4,24 +4,27 @@
   
   <script type="application/javascript">
     var gameLoopCounter = 0;
-    var cycleTime = 200;
+    var cycleTime = 50;
+    var landerSize = 10;
+    var reboundRate = -0.9 // defines bounce decay; -1 is perfect rebound 
     var changeX = 0; // starting vertical velocity
     var changeY = 5; // starting horizontal velocity
     var posX  = 0; // starting horizontal position 
     var posY = 0; // starting vertical position
     var accelX = 1; // vertical forces at work!  
     var accelY = 0; // horizontal forces at work! 
+    var drag = 0.99999;
     var canvasEdgeX = 500; 
     var canvasEdgeY = 500;
-    var landerSize = 5; 
+
 
     function loop(){
 
       setInterval(function(){
         console.log("loop starts");
         gameLoopCounter += 1; 
-        changeX += accelX;
-        changeY += accelY; 
+        changeX = (changeX + accelX) * drag;
+        changeY = (changeY + accelY) * drag; 
         posX += changeX;
         posY += changeY;
         console.log("positions updated to " + posX + " " + posY);
@@ -33,13 +36,32 @@
     function collisionCheck(){
       console.log("collisionCheck starts");
       console.log("posY = " + posY);
-      if (posX > (canvasEdgeX - landerSize)) {
-        console.log("hit the edge!");
-      posX = (canvasEdgeX - landerSize);
-      changeX = (changeX * -0.95)
-      // //reverse changeY
-      // //decay changeY
+
+      if (posX > (canvasEdgeX - landerSize)) { // lower edge
+        console.log("hit the bottom X edge!");
+        posX = (canvasEdgeX - landerSize);
+        changeX = (changeX * reboundRate)
       }
+
+      if (posY > (canvasEdgeY - landerSize)) { // right edge
+        console.log("hit the right Y edge!");
+        posY = (canvasEdgeY - landerSize);
+        changeY = (changeY * reboundRate)
+      }
+
+      if (posX < 0) {                         // upper edge
+        console.log("hit the top X edge!");
+        posX = 0;
+        changeX = (changeX * reboundRate)
+      }
+
+      if (posY < 0) {                         // left edge
+        console.log("hit the left Y edge!");
+        posY = 0;
+        changeY = (changeY * reboundRate)
+      }
+
+
     };
 
     function draw(){
@@ -52,7 +74,7 @@
         console.log("gameLoopCounter = " + gameLoopCounter)
 
         var ctx = canvas.getContext("2d");
-        ctx.fillStyle = "rgba(0, 255, 0, .5)";
+        ctx.fillStyle = "rgba(0, 200, 0, .25)";
         ctx.fillRect (posY, posX, landerSize, landerSize);
 
       }
