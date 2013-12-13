@@ -4,12 +4,12 @@
   
   <script type="application/javascript">
   var gameLoopCounter = 0;
-  var cycleTime = 1000;
+  var cycleTime = 100;
   var changeX = 0; // starting vertical velocity
-  var changeY = 1; // starting horizontal velocity
+  var changeY = 5; // starting horizontal velocity
   var posX  = 0; // starting horizontal position 
   var posY = 0; // starting vertical position
-  var accelX = -1 // vertical forces at work!  
+  var accelX = 1 // vertical forces at work!  
   var accelY = 0 // horizontal forces at work! 
 
     function loop() {
@@ -17,6 +17,9 @@
       setInterval(function(){
         console.log("loop starts");
         gameLoopCounter += 1 
+
+        changeX += accelX
+        changeY += accelY 
 
         posX += changeX
         posY += changeY
