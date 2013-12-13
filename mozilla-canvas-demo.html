@@ -4,16 +4,17 @@
   
   <script type="application/javascript">
     var gameLoopCounter = 0;
-    var cycleTime = 50;
+    var frameRate = 30
+    var cycleTime = (1000 / frameRate);
     var landerSize = 10;
-    var reboundRate = -0.9 // defines bounce decay; -1 is perfect rebound 
+    var reboundRate = 0.9 // defines bounce decay; 1 is perfect rebound 
     var changeX = 0; // starting vertical velocity
     var changeY = 5; // starting horizontal velocity
     var posX  = 0; // starting horizontal position 
     var posY = 0; // starting vertical position
     var accelX = 1; // vertical forces at work!  
     var accelY = 0; // horizontal forces at work! 
-    var drag = 0.99999;
+    var drag = 0.999;
     var canvasEdgeX = 500; 
     var canvasEdgeY = 500;
 
@@ -40,25 +41,29 @@
       if (posX > (canvasEdgeX - landerSize)) { // lower edge
         console.log("hit the bottom X edge!");
         posX = (canvasEdgeX - landerSize);
-        changeX = (changeX * reboundRate)
+        changeX = (changeX * reboundRate * -1)
+        changeY = (changeY * reboundRate) 
       }
 
       if (posY > (canvasEdgeY - landerSize)) { // right edge
         console.log("hit the right Y edge!");
         posY = (canvasEdgeY - landerSize);
-        changeY = (changeY * reboundRate)
+        changeY = (changeY * reboundRate * -1)
+        changeX = (changeX * reboundRate) 
       }
 
       if (posX < 0) {                         // upper edge
         console.log("hit the top X edge!");
         posX = 0;
-        changeX = (changeX * reboundRate)
+        changeX = (changeX * reboundRate * -1)
+        changeY = (changeY * reboundRate) 
       }
 
       if (posY < 0) {                         // left edge
         console.log("hit the left Y edge!");
         posY = 0;
-        changeY = (changeY * reboundRate)
+        changeY = (changeY * reboundRate * -1)
+        changeX = (changeX * reboundRate) 
       }
 
 
