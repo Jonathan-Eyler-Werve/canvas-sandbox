@@ -4,7 +4,7 @@
   
   <script type="application/javascript">
     var gameLoopCounter = 0;
-    var cycleTime = 1000;
+    var cycleTime = 200;
     var changeX = 0; // starting vertical velocity
     var changeY = 5; // starting horizontal velocity
     var posX  = 0; // starting horizontal position 
@@ -25,17 +25,22 @@
         posX += changeX;
         posY += changeY;
         console.log("positions updated to " + posX + " " + posY);
-        // collisionCheck();
+        collisionCheck();
         draw();
       },cycleTime);
     };
 
-    // function collisionCheck(){
-    //   console.log("collisionCheck starts")
-    //   if posY >= (500 - 5) {
-    //     console.log("hit the edge!")
-    //   }
-    // };
+    function collisionCheck(){
+      console.log("collisionCheck starts");
+      console.log("posY = " + posY);
+      if (posX > (canvasEdgeX - landerSize)) {
+        console.log("hit the edge!");
+      posX = (canvasEdgeX - landerSize);
+      changeX = (changeX * -0.95)
+      // //reverse changeY
+      // //decay changeY
+      }
+    };
 
     function draw(){
       console.log("draw starts")
