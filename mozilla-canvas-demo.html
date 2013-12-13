@@ -3,16 +3,45 @@
     <title>Canvas tutorial</title>
   
   <script type="application/javascript">
+  var gameLoopCounter = 0;
+  var cycleTime = 1000;
+  var changeX = 0; // starting vertical velocity
+  var changeY = 1; // starting horizontal velocity
+  var posX  = 0; // starting horizontal position 
+  var posY = 0; // starting vertical position
+  var accelX = -1 // vertical forces at work!  
+  var accelY = 0 // horizontal forces at work! 
+
+    function loop() {
+
+      setInterval(function(){
+        console.log("loop starts");
+        gameLoopCounter += 1 
+
+        posX += changeX
+        posY += changeY
+
+        console.log("positions updated to " + posX + " " + posY)
+
+        draw();
+      },cycleTime);
+
+    }
+
+
     function draw() {
+      console.log("draw starts")
+
+      // need to clear the canvas between draws! 
+
       var canvas = document.getElementById("canvas");
       if (canvas.getContext) {
+        console.log("gameLoopCounter = " + gameLoopCounter)
+
         var ctx = canvas.getContext("2d");
+        ctx.fillStyle = "rgba(0, 0, 0, .25)";
+        ctx.fillRect (posY, posX, 5, 5);
 
-        ctx.fillStyle = "rgb(200,0,0)";
-        ctx.fillRect (10, 10, 55, 50);
-
-        ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
-        ctx.fillRect (30, 30, 55, 50);
       }
     }
   </script>
@@ -23,8 +52,8 @@
  
   </head>
  
-  <body onload="draw();">
-    <canvas id="canvas" width="150" height="150"></canvas>
+  <body onload="loop();">
+    <canvas id="canvas" width="200" height="200"></canvas>
   </body>
 
 </html>
